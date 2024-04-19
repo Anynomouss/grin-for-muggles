@@ -121,8 +121,9 @@ Output commitments themselves cannot be decomposed by your wallet. Output commit
 
 # Mind boggling realizations :exploding_head:
 * Mimblewimble is a new blockchain format
+* Grin is a pure and minimal mimblewmble implementation
 * Grin has no addresses or amounts on chain
-* Grin / mimblewimble gets **free privacy** and **free scalability** through its **interactive** nature :magic_wand:.
+* Grin (mimblewimble) gets **free privacy** and **free scalability** through **interactivity**  :magic_wand:.
 * Interactivity is a **benefit**, not a cost :bulb:.
 * Grin nodes treat all transactions as **a single transaction**:exploding_head:
 * Grin transactions can be aggregated at any level!

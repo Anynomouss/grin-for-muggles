@@ -1,7 +1,3 @@
----
-layout: page
----
-
 [WARNING THIS IS WORK IN PROGRESS AND MIGHT CONTAIN WRONG INFORMATION]  
 # Grin for muggles AND aspiring wizards :thinking: :mage_woman:
 This documentation aims to explain Grin and mimblewimble for regular muggles as well as for aspiring wizards.

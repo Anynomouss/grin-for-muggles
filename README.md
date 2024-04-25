@@ -1,3 +1,7 @@
+---
+layout: page
+---
+
 [WARNING THIS IS WORK IN PROGRESS AND MIGHT CONTAIN WRONG INFORMATION]  
 # Grin for muggles AND aspiring wizards :thinking: :mage_woman:
 This documentation aims to explain Grin and mimblewimble for regular muggles as well as for aspiring wizards.
@@ -19,7 +23,7 @@ This document serves as an Add-On to the [official documentation](https://docs.g
 ***
 
 # How does my Grin wallet work :purse: :key:?
-Grin wallets are generated the same way as most Crypto wallets. Grin follows the BIP32 standard in deriving a master seed from a mnemonic seed phrase (BIP39) and deriving children keys as a [Hierarchically Deterministic (HD)](https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/) wallet. The process for deriving BIP32 HD wallets is that you start with a randomly generated number called ***seed***, which is presented to the users as a list of words called a ***seed phrase*** (12-24 words). From this seed phrase a master key as well as children keys are generated. HD wallets can be best understood by visualizing them as a tree:
+Grin wallets are generated the same way as Bitcoin wallets. Grin follows the BIP32 standard in deriving a master seed from a mnemonic seed phrase (BIP39) and deriving children keys as a [Hierarchically Deterministic (HD)](https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/https://learnmeabitcoin.com/technical/keys/hd-wallets/derivation-paths/) wallet. The process for deriving BIP32 HD wallets is that you start with a randomly generated number called ***seed***, which is presented to the users as a list of words called a ***seed phrase*** (12-24 words). From this seed phrase a master key as well as children keys are generated. HD wallets can be best understood by visualizing them as a tree:
 
             BIP32:
             Master  / Account/ Purpose / index                           Derivation_path
@@ -72,8 +76,8 @@ Second, in grin transactions, output values are hidden (blinded) and not bound t
 The next section will explain in more detail how Grin's magic works in a) hiding amounts, b) not needing addresses, c) making transactions easy to aggregate.
 
 **Grin transactions involve a couple of cool tricks**:    
-1) **Homomorphic Commitments**: In Grin, values are hidden by multiplying all values with a Generator point on the secp256k1 elliptic curve. Multiplication with generator point `G` or other curve point such as `H` is not an addition in the traditional sense, it is itteratively hopping around the eliptic curve to find a new point. Although the result of multiplying a value with a generator point results in a "seemingly random number". Addition of these points still works. 
-If a transaction would involve one input value and two output values `v1+v2-v3=0`, they can be multiplied with generator point `H` on an [Elliptic Curve](https://docs.grin.mw/wiki/introduction/mimblewimble/ecc/https://docs.grin.mw/wiki/introduction/mimblewimble/ecc/) and anyone can verify they still sum up to zero `v2*H + v3*H - v1*H = 0*H` without knowing any of the values `v1`, `v2` or `v3`. 
+1) **Homomorphic Commitments**: In Grin, values are hidden by multiplying all values with a Generator point on the secp256k1 Elliptic Curve. Multiplication with generator point `G` or other curve point such as `H` is not an addition in the traditional sense, it is iteratively hopping around the Eliptic Curve to find a new point. The result of multiplying a value with a generator point results is a "seemingly random number", but it is important to remember that addition of these curve points still works. 
+If a transaction would involve one input value and two output values `v1+v2-v3=0`, they can be multiplied with generator point `H` on an [Elliptic Curve](https://docs.grin.mw/wiki/introduction/mimblewimble/ecc/https://docs.grin.mw/wiki/introduction/mimblewimble/ecc/) and anyone can still verify they sum up to zero `v2*H + v3*H - v1*H = 0*H` without knowing any of the values `v1`, `v2` or `v3`. 
 
 2) **Pedersen Commitments**: As explained above, Grin transactions hide the amount in an output by multiplying them with a generator point. However, this would allow people to find `v1`, `v2` or `v3` by guessing them. To solve this problem, a second trick is applied by adding a private-key multiplied with another generator point `G` to the output commitment. In case you were wondering, yes multiplying a key with a generator point creates a public key just like in Bitcoin! Adding a public-key to an output makes it impossible to find the value in an output:<br/>
 `Output = K1*G+v1*H`. To an outsider an output commitment looks like a random piece of data, e.g. : `09551fd2ba097bbf53d027c9820c2f19a544a15f21cb46614ce5860077a3663181`.<br/><br/>  
@@ -96,19 +100,19 @@ Remember that Grin transactions can be freely aggregated. Therefore transactions
 Since there are no addresses or otherwise identifying information in transactions, there is very little you can learn by analyzing the Grin blockchain. The more transactions are aggregated, the harder it will be to guess which inputs and outputs are linked. Simply put, unless an observer had access to transaction data before aggregating, he or she does not know which inputs or outputs are linked. That is pretty neat trick to improve the anonymity for all transactions.  
 
 There is however another very important aspect of "aggregating" that we have to discuss. Any output that is spend occurs both as input as well as output with the same public-key, meaning its value is identical. As you have learned in basic math, if you sum two equations and something occurs on both sides of an equation  (so both with + and -), you can simply ~cross it out~.   
-For example if we have two transactions with `A,B,C,D` being inputs when on the left of the '=' symbol and outputs when on right of the `=` symbol, they can be aggregated:<br/><br/>
+For example if we have two transactions with `A,B,C,D` being inputs when on the left of the '=' symbol and being outputs when on right of the `=` symbol, they can be aggregated:<br/><br/>
 *transaction 1: A = B + C <br/>*
 *transaction 2: B = D + E  <br/>*
 *_________________________________+ <br/>*
 *Aggregated   : A ~~+B-B~~ = C+D+E <br/>*
 
-The same holds true when considering the blockchain as a whole, all transactions can be added/aggregated to calculate whether the supply is correct and all input commitments that occur also as an output commitment be discarded:<br/><br/>
+The same holds true when considering the blockchain as a whole, all transactions can be added/aggregated to calculate whether the supply is correct and all input commitments that also occur as output commitments, can be discarded:<br/><br/>
 `Σ utxo = Σ kernel + height * 60 * H` 
   
-This means all nodes can simply forget an output ever existed once it is spend!. **Grin only remembers unspent transaction outputs**. This is great for saving blockchain space (scalability) as well as for privacy. To put this to the test, make a backup of your **wallet_data** folder, delete the original and try restoring your wallet from the seed. You  will find-out that even your own wallet will have forgotten transactions for which the outputs were spend.
+This means that all nodes can simply forget an output ever existed once it is spend!. **Grin only remembers unspent transaction outputs**. This is great for saving blockchain space (scalability) as well as for privacy. To put this to the test, make a backup of your **wallet_data** folder, delete the original and try restoring your wallet from the seed. You  will find-out that even your own wallet will have forgotten transactions for which the outputs were spend :astonished:.
 
 > **TAKE AWAY:**
- In grin, every transaction is a MultSig where both sender and receiver create a partial signature where they sign for their own inputs and outputs. Their partial-signature together creates the signature for the whole transaction. Transactions can be freely be aggregated at the level of a) a transactions, b) blocks, c) blockchain. A node treats the Grin blockchain as one large transaction! To verify this "large transaction" is true, you node verifies:   
+ In grin, every transaction is a MultSig where both sender and receiver create a partial signature where they sign for their own inputs and outputs. Their partial-signature together creates the signature for the whole transaction. Transactions can be freely be aggregated at the level of a) a transactions, b) a block, c) the blockchain. A node treats the Grin blockchain as one large transaction! To verify this "large transaction" is true, you node verifies:   
 `Σ utxo = Σ kernel + height * 60 * H`   
 The above simple equation proves that no new coins are created apart from the block reward as well as the validity of all transactions. This trick of "forgetting" spend outputs is called *[cut-through](https://docs.grin.mw/wiki/introduction/(og)introduction-to-mimblewimble/#cut-throughhttps://docs.grin.mw/wiki/introduction/(og)introduction-to-mimblewimble/#cut-through)*.
 
@@ -144,13 +148,13 @@ Note that while addition of EC is used to generate public-key private-key pairs,
 If you find this explanation to hard, try this awesome [Elliptic-curve explanation for 5 years old](http://royalforkblog.github.io/2014/09/04/ecc/?#explain-like-im-5-or-thereaboutshttp://royalforkblog.github.io/2014/09/04/ecc/?#explain-like-im-5-or-thereabouts) :smile:
 
 Schnor Signature are also used in Bitcoin Taproot transactions. Schnor signature create very small and uniform Signatures where any number of parties can combine their private-keys and public-keys. Bitcoin uses Schnor Signature signatures to have 40% smaller transactions and to allow MultiSig using a single public and private-key, a property why Grin uses these Signatures. 
-In the case of a single sender and a single receiver, **Grin transactions are basically a 2 out of 2 multisig transaction**. In theory more parties can be supported in the future. However, a generalized multisig solution for Grin with more than two parties involves some extra security concerns[[REF](https://gist.github.com/phyro/0f26da4a97e2f4f180bba9a44e20e290https://gist.github.com/phyro/0f26da4a97e2f4f180bba9a44e20e290)].
+In the case of a single sender and a single receiver, **Grin transactions are basically a 2 out of 2 MultiSig transaction**. In theory more parties can be supported in the future. However, a generalized MultiSig solution with more than two parties involves some extra security concerns[[REF](https://gist.github.com/phyro/0f26da4a97e2f4f180bba9a44e20e290https://gist.github.com/phyro/0f26da4a97e2f4f180bba9a44e20e290)].
 
-The (kernel-)excess value of a transaction is the sum of all outputs blinding factors, minus the sum of all inputs blinding factors, `sum(outputs) - sum(inputs) = kernel_excess`. Remember that blinding factors are just private keys generated by your wallet and the receivers wallet. Both the sender and receiver are **signers** in this MultiSig transaction.
-Both **signers interactively sum their individual public keys**  to derive a single "aggregate" key, that is synonymous to a traditional public key. Schnorr signatures has three "levels" of signature aggregation. Public keys can be be aggregated a) within a transaction, b) inside the block-validation or in the complete chain. Since Schnorr signatures support batch validation, validating Grin transactions is faster than validating signatures individually like in any non taproot (P2TR) Bitcoin transaction (PK, P2PK, P2PKH, P2SH, P2WPKH).
+The (kernel-)excess value of a transaction is the sum of all outputs blinding factors, minus the sum of all inputs blinding factors, `sum(outputs) - sum(inputs) = kernel_excess`. Remember that blinding factors are just private keys  generated by your wallet and the receivers wallet multiplied by `G` to create a public-key. 
+Both **signers interactively sum their individual public keys** to derive a single aggregate **joined public-key**, that is synonymous to a traditional public key. Both the sender and receiver are **signers** in this MultiSig transaction and sign with their **joined private-key**. Schnor signatures has three "levels" of signature aggregation. Public keys can be be aggregated a) within a transaction, b) inside the block-validation or in the complete chain. Schnor signatures have multiple advantage, such as only taking `33 bytes` in size, improving privacy through aggregation and around 40% faster validation speed in batch mode compared to regular ECDA signatures like those used in Bitcoin [PK, P2PK, P2PKH, P2SH, P2WPKH] type transactions. Even when comparing Grin transaction size to Bitcoin taproot (P2TR), the historic transactions size is smaller since range-proofs of spend outputs can be thrown away.
 
 **Kernel offset**
-There is one subtle problem when aggregating transactions. An attacker can still recover which inputs and outputs belong together, since when adding up the right combination of inputs and outputs, they match the **kernel_excess** of the transaction. To protect against this another "blinding factor is used", called the **kernel_offset**. For a [detailed description](https://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsetshttps://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsets) I will refer to the official documentation.
+There is one subtle problem when aggregating transactions and that is that an attacker can de-agrete them by adding up the right combination of inputs and outputs until they find a combination that matches the **kernel_excess** of an transaction. To protect against this another "blinding factor" is used, called the **kernel_offset**. The most important thing to know is that each time transactions get aggregated, also their **kernel_offsets** are aggregated. The result is that an attacker cannot any-longer de-aggregate them since they do not know the individual offsets. For a more detailed description, read the  refer to the official documentation on [kernell offset](https://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsetshttps://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsets).
 
 
 
@@ -159,20 +163,21 @@ There is one subtle problem when aggregating transactions. An attacker can still
 * Mimblewimble is a blockchain format
 * Grin is a pure and minimal implementation of mimblewimble
 * Grin has no addresses or amounts on chain
-* Grin transactions are 2 out of 2 MultiSig transactions 
-* Both receiver and sender sign for their own inputs and outputs 
-* Grin (mimblewimble) gets **free privacy** and **free scalability** through **interactivity**  :magic_wand:.
-* Interactivity is a **benefit**, not a cost :bulb:.
-* Grin nodes treat all transactions as **a single transaction** :exploding_head:
+* Receiver and sender sign for their own inputs and outputs 
+* Grin transactions are 2 out of 2 MultiSigs
+* Input and output commitments are only 33 bytes and magically manage to be both blinding and binding :magic_wand:
+* Grin (mimblewimble) gets **free privacy** and **free scalability** through **interactivity**  :magic_:magic_wand:
+* Interactivity is a **benefit**, not a cost :bulb:
+* Your Grin node treats all transactions as **a single transaction** :exploding_head:
 * Grin transactions can be aggregated at any level!
     ```
-    transaction: sum(outputs) - sum(inputs) = kernel_excess  
+    transaction: sum(outputs) - sum(inputs) = kernel_excess + fee 
     block:       sum(outputs) - sum(inputs) = sum(kernel_excess)  
     blockchain:  sum(outputs) - sum(inputs) = sum(kernel_excess) + height*60*H  
     ```
 * Proving a) **non-inflation** b) **ownership** for the whole blockchain is as simple as checking: 
   `Σ utxo = Σ kernel + height * 60 * H` 
-* A Grin transaction consist of a) a **single transaction kernel** b) a *range proof* per output and c) a **public fee**.
+* A typical Grin consist of a) a **single transaction kernel** b) a *range proof* per output and c) a **public fee**.
 * A spend Grin transaction only leaves the transaction kernel on chain. Range-proofs are 'forgotten'. A typical transaction of 1 input and 2 outputs that contain `~2 KB` of transaction data, only leaves `~100 bytes` on chain when you spend a transaction. 
 * Historic Grin transactions are `~100` bytes which is still 2/3 the size of a Bitcoin taproot transaction `~150` while providing way better privacy. 
 * Grin is highly scaleble

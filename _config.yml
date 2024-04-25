@@ -1,3 +1,5 @@
-remote_theme: https://github.com/abhinavs/moonwalk/blob/master/github_pages.md
-title: Grin from a user perspective
+plugins:
+  - jekyll-remote-theme
+remote_theme: remote_theme: abhinavs/moonwalk
+title: Grin for users
 description: Grin for muggles and aspiring wizards

@@ -154,7 +154,7 @@ The (kernel-)excess value of a transaction is the sum of all outputs blinding fa
 Both **signers interactively sum their individual public keys** to derive a single aggregate **joined public-key**, that is synonymous to a traditional public key. Both the sender and receiver are **signers** in this MultiSig transaction and sign with their **joined private-key**. Schnor signatures has three "levels" of signature aggregation. Public keys can be be aggregated a) within a transaction, b) inside the block-validation or in the complete chain. Schnor signatures have multiple advantage, such as only taking `33 bytes` in size, improving privacy through aggregation and around 40% faster validation speed in batch mode compared to regular ECDA signatures like those used in Bitcoin [PK, P2PK, P2PKH, P2SH, P2WPKH] type transactions. Even when comparing Grin transaction size to Bitcoin taproot (P2TR), the historic transactions size is smaller since range-proofs of spend outputs can be thrown away.
 
 **Kernel offset**
-There is one subtle problem when aggregating transactions and that is that an attacker can de-agrete them by adding up the right combination of inputs and outputs until they find a combination that matches the **kernel_excess** of an transaction. To protect against this another "blinding factor" is used, called the **kernel_offset**. The most important thing to know is that each time transactions get aggregated, also their **kernel_offsets** are aggregated. The result is that an attacker cannot any-longer de-aggregate them since they do not know the individual offsets. For a more detailed description, read the  refer to the official documentation on [kernell offset](https://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsetshttps://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsets).
+There is one subtle problem when aggregating transactions and that is that an attacker can de-agrete them by adding up the right combination of inputs and outputs until they find a combination that matches the **kernel_excess** of an transaction. To protect against this another "blinding factor" is used, called the **kernel_offset**. The most important thing to know is that each time transactions get aggregated, also their **kernel_offsets** are aggregated. The result is that an attacker cannot any-longer de-aggregate them since they do not know the individual offsets. For a more detailed description, read the  refer to the official documentation on [kernel offset](https://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsetshttps://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/#Kernel%20offsets).
 
 
 
@@ -179,7 +179,8 @@ There is one subtle problem when aggregating transactions and that is that an at
   `Σ utxo = Σ kernel + height * 60 * H` 
 * A typical Grin consist of a) a **single transaction kernel** b) a *range proof* per output and c) a **public fee**.
 * A spend Grin transaction only leaves the transaction kernel on chain. Range-proofs are 'forgotten'. A typical transaction of 1 input and 2 outputs that contain `~2 KB` of transaction data, only leaves `~100 bytes` on chain when you spend a transaction. 
-* Historic Grin transactions are `~100` bytes which is still 2/3 the size of a Bitcoin taproot transaction `~150` while providing way better privacy. 
+* An output is a 33 bytes commitment accompanied by a 640 byte range-proof.
+* Historic Grin transactions are `~100` bytes which is 2/3 the size of a Bitcoin taproot transaction of `~150` while hiding all amounts privacy. 
 * Grin is highly scaleble
 * Grins code base is minimal, **~13% the size of Bitcoin**, with `136216` versus `877341` lines of code.
 * Grin is a minimal and elegant digital cash implementation that is privacy preserving, fungible, scaleble, fair and designed for the decades to come.
@@ -191,7 +192,7 @@ There is one subtle problem when aggregating transactions and that is that an at
 
 
 # Disclaimer
-Learning about Grin might make you lose interest in all other crypto projects and might even convert bitcoin maximalist since Grin is a superior blockchain format (Just my and [Satoshi's opinion](https://phyro.github.io/what-is-grin/commitment_chains.htmlhttps://phyro.github.io/what-is-grin/commitment_chains.html). Read all you can about both Grin and Bitcoin and feel free to contact me to **tell me you disagree after educating yourself fully**. I highly doubt you will disagree :wink:
+Learning about Grin might make you lose interest in all other crypto projects and might even make you lose your reconsider your bitcoin maximalism. Why you might ask? Since Grin is a superior blockchain format, even [Satoshi agrees](https://phyro.github.io/what-is-grin/commitment_chains.htmlhttps://phyro.github.io/what-is-grin/commitment_chains.html). Read all you can about both Grin and Bitcoin and after fully educating yourself feel free to contact me to tell me I am wrong :wink:
 
 
 ***

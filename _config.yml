@@ -1,6 +1,10 @@
 # plugins:
 #  - jekyll-remote-theme
 #    card: summary_large_image
+plugins:
+  - jemoji # Needed to get emoticon support
+
+
 #theme: moonwalk # if you are using GitHub Pages, change it to remote_theme: abhinavs/moonwalk
 remote_theme: abhinavs/moonwalk
 theme_config:

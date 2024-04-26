@@ -173,7 +173,7 @@ There is one subtle problem when aggregating transactions and that is that an at
     ```
 * Proving a) **non-inflation** b) **ownership** for the whole blockchain is as simple as checking: 
   `Σ utxo = Σ kernel + height * 60 * H` 
-* A typical Grin consist of a) a **single transaction kernel** b) a *range proof* per output and c) a **public fee**.
+* A typical Grin transaction consist of a) a **single transaction kernel** b) a *range proof* per output and c) a **public fee**.
 * A spend Grin transaction only leaves the transaction kernel on chain. Range-proofs are 'forgotten'. A typical transaction of 1 input and 2 outputs that contain `~2 KB` of transaction data, only leaves `~100 bytes` on chain when you spend a transaction. 
 * An output is a 33 bytes commitment accompanied by a 640 byte range-proof.
 * Historic Grin transactions are `~100` bytes which is 2/3 the size of a Bitcoin taproot transaction of `~150` while hiding all amounts privacy. 

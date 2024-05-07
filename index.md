@@ -4,4 +4,4 @@ The objective of this site is to provide documentation to help muggles and aspir
 ## Table of contents
 1) [Grin for muggles and aspiring  wizards](https://anynomouss.github.io/grin-for-muggles/grin_for_muggles_and_aspiring_wizards.html) <br>
 2) [Grin in data](https://anynomouss.github.io/grin-for-muggles/grin_in_data.html) <br>
-3) Grin transaction relay system concept <br>
+3) [Grin **Transaction Buddy** system](https://anynomouss.github.io/grin-for-muggles/transaction-buddy-system.html) <br>

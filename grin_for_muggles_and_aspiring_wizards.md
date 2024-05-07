@@ -59,13 +59,6 @@ Thirdly, Grin does not store all transaction information on chain. Payment proof
 > **SUMMARY:**
 Your Grin wallet is a normal BIP32 HD wallet. Your wallet seed is stored in a file called ***"wallet.seed"***. When you restore your wallet from the seed phrase, all funds will be recovered. However, you will not be able to: 1) see who send you a transactions, 2) see spend transaction outputs 3) restore payment proofs since this information is not stored on the blockchain. 
   
-***
-
-# What is all this Elliptic Curve stuff?
-Grin, like Bitcoin, uses Elliptic Curve cryptography. Elliptic Curve (EC) I will try to explain Elliptic Curve cryptography conceptually and not from a mathematical point of view. Elliptic Curve cryptograph uses `privatekeys` which are normal but very large numbers. For example a privatekey might look like this when encoded in hexadecimal format: `"0123456789abcdefg00000000000000000000000000000000000000000000000"`. <br>Normal numbers like a `Private Key` are called `scalers` by mathematicians and are by convention written in `lower-case`. Since a Private Key is normal number, computers can do all normal calculationss with them such as **[addition, multiplication, substraction, devision]**. As you might know, privatekeys also have a matching `Public Key`. Public Keys are not a normal number, they exist in the "Elliptic Curve realm". Public Key's are a point on the Elliptic Curve which is an exponential function. Public Keys are derived by multiplying a normal number such as a privatkey with a known point (generator point) on the curve. While it is called multiplication, a "procedure" might be a better fitting description. The multiplication is process of "hopping around the curve", each time a unique and seemingly random number is found using this procedure. After many hopping around, the Public Key is derived. Although deriving the Public Key from a privatkey is feasible, finding the Public Key from a PrivateKey is not possile. In the "Elliptic Curve realm", there are different rules, only **[addition, multiplication]** are possible. What this means in practice is that deriving the Public Key is a one way process. 
-`Private Key => Public Key`
-`Private Key <≠ Public Key`
-
 
 # How are transactions in Grin different from Bitcoin?
 **Bitcoin transactions:**

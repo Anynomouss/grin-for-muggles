@@ -1,36 +1,36 @@
-**Disclaimer:** <br/>This is docucement explorers a **non-interactive user experience** for Grin transactions using a **relay buddy system**. This method is not proven, created for fun, and does not mean this author advocates this solution.  
+**Disclaimer:** <br/>This is docucement explores a **non-interactive user experience** for Grin transactions using a **relay buddy system**. This method is not proven, created for fun, and the author does advocates this solution.  
 
-# Discussion on Bulleting Boards
-This proposal can be seen as a 5th optionl that can be added to the [Discussion on Bulletin Board Systems](https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822]) on the grin forum. Note that Grin is by default interactive crypto, the discusion on Bulletin Board Systems does not aim to provide 1 step or non-interactive transactions, but aims to find/explore user friendly ways to buffer and facilitate interaction between users.
+# Discussion on Bulleting Boards systems
+This proposal can be seen as a 5th option in the [Discussion on Bulletin Board Systems on the grin forum.](https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822]). Note that Grin is by default interactive crypto, the discusion on Bulletin Board Systems does not aim to provide 1 step or non-interactive transactions, but aims to find/explore user friendly ways to buffer and facilitate interaction between users.
 
 ## Transaction Relay-buddy system
-This document proposes a method which I ca call the transaction relay *Buddy System* to allow a users (**A, Alice**) to send a transaction via an intermediary (**B, Bob**) to another user (**C, Charlie**). The transaction flow is **request-RSR-SRS** and requires 6 steps of interaction. The objective is to faciliate a transaction between Alice and Charlie while Alice is offline.
+This document proposes a method which I call the transaction relay *Buddy System* to allow a users (**A, Alice**) to send a transaction via an intermediary (**B, Bob**) to another user (**C, Charlie**). The transaction flow is **request-RSR-SRS** and requires 6 steps of interaction. The objective is to faciliate transaction between Alice and Charlie while Alice is offline.
 
 0) Alice contacts Charlie over tor, but Charlie is offline
 1) Alice send a **request** to Bob, the intermediary/*relay-buddy*.
-2) Bob creating a payment request **(RSR)** including his own output/**relay-fee**
+2) Bob creates a payment request **(RSR)** including his own output/**relay-fee**
 3) Alice adds the outputs for Charlie using his known Pubkey(s) and creates her partial signature
 4) Bob wiats till Charlie comes online to continues the transaction. When Charlie comes online, Bob sends the transaction in SRS mode to Charlie
-5) Charlie receives the transaction createsg new outputs, to replace the ones made by and signed for by Alice, which can be dropped thanks to **cut-through**. Charlie signs both the innitial RSR transaction and the new SRS transaction (so two kernesl) and sends the result to Bob.  
+5) Charlie receives the transaction - creates new outputs to replace the ones made by and signed for by Alice. These old outputs can be dropped thanks to **cut-through** so they do not need to appear on chain. Charlie signs both the innitial RSR transaction and the new SRS transaction (two kernesl) and sends the result to Bob.  
 6) Bob finalizes the two transactions that are now aggregated by signing the second kernel and broadcast the transction with both kernels to earn his relay fee.
 
 **Note**
 * Bob cannot broadcast the transaction without Charlie, since he does not know the partial excess to sign for Charlies outputs.
-* The outputs created by Alice for Charlie, will never appear on-chain thanks to cutt-through, unless Bob does include these outputs, in which case miners will not there was a relay transaction but will drop the intermediate outputs.
-This [idea originated from 2021](https://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomoushttps://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomous). 
+* The outputs created by Alice for Charlie, will never appear on-chain thanks to cutt-through, unless Bob does include these outputs on purpose, in which case miners will will drop the intermediate outputs.
+This idea [originates from 2021](https://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomoushttps://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomous). 
 * The relay buddy system requires additional public transfer information to be presented by the receiver, e.g. a wrapper around the slatepack address. See more details later in this document on *Transaction transfer information*.
 
 ***Advantages:***
-* Generic solution, does not reuse public keys and only the intermediary (Bob) can deduce Alice and Charlie interacted.
+* Generic solution: Does not reuse public keys and only the intermediary (Bob) can deduce Alice and Charlie interacted.
 * Decentralised, any wallet can be a relay with minimal overhead or extra code since in fact the relay is just two normal transactions aggregated.
-* No new cryptography is needed, no side chain, no extra layers, no merged mining, little complexity
+* No new cryptography is needed, no side chain, no extra layers, no merged mining, little complexity.
 * Relayed transactions are indistinguishable from a normal transaction and as such are not identifiable as being relayed.
 
 ***Disadvantages:***
-* Relay is not private (opposed to for "https://gist.github.com/phyro/1046022377fcb1886a1b4f6500f23773[Contract Wall](https://gist.github.com/phyro/1046022377fcb1886a1b4f6500f23773)" solution by Phyro)  
-* The **relay-buddy system** is decentralised, but does require extra transaction relay wrapper information to be implemented.
-* For payment proofs to work, both kernels need to be published. This requires Bob to be trusted. Perhaps an extra proof need to be generated between Alice and Bob, to make sure that Bob and Charlie cannot 'collude' by Bob not publishing the second kernel, allowing Charlie to deny having received funds.
-* It is unclear how robust this system will be, it is untested, purely hypothetical and unproven
+* The relay is not private (opposed to the [Contract Wall](https://gist.github.com/phyro/1046022377fcb1886a1b4f6500f23773)" solution by Phyro)  
+* The **relay-buddy system** can be decentralised, but does require extra transaction relay wrapper information to be implemented.
+* For payment proofs to work, both kernels need to be published. This requires Bob to be trusted. Perhaps an extra proof needss to be generated between Alice and Bob, to make sure that Bob and Charlie cannot 'collude' by Bob not publishing the second kernel, allowing Charlie to deny having received funds.
+* It is unclear how robust this system can be, it is untested, purely hypothetical and unproven
 
   
 As mentioned above, the **transaction relay-buddy** system, requires the implementation of a `transaction transfer information system`. The transaction transfer information is a wrapper with additional information besides the slatepack address of the receiver. In this wrapper, the Receiver puts additional information such as the preferred methods in order of his/her preference to receive a transaction. One of these methods could be a relay buddy/intermediary. When the receiver is offline, the Sender can use the information in the `transaction transfer information` to send to the transaction intermediary. As said before, the intermediary can be a  buddy, central relay provider o a random wallet/node via tor but that last option is not considered for now since it requires more security cosiderations as well as decentralised way to determine which node to use ass buddy.

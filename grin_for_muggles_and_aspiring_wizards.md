@@ -59,7 +59,7 @@ Thirdly, Grin does not store all transaction information on chain. Payment proof
 > **SUMMARY:**
 Your Grin wallet is a normal BIP32 HD wallet. Your wallet seed is stored in a file called ***"wallet.seed"***. When you restore your wallet from the seed phrase, all funds will be recovered. However, you will not be able to: 1) see who send you a transactions, 2) see spend transaction outputs 3) restore payment proofs since this information is not stored on the blockchain. 
   
-
+***
 # How are transactions in Grin different from Bitcoin?
 **Bitcoin transactions:**
 In Bitcoin, the sender is in full control. The sender Signs the transaction data with a [digital signature](https://learnmeabitcoin.com/beginners/guide/digital-signatures/https://learnmeabitcoin.com/beginners/guide/digital-signatures/). Bitcoin addresses are either hashed public keys or a hash of a lock-script that includes your public key. [[REF](https://learnmeabitcoin.com/technical/keys/address/https://learnmeabitcoin.com/technical/keys/address/)]. Whenever someone sends Bitcoin to your address, she transfers ownership of the Unspent Transaction Outputs (UTXO's) in that transaction by saying *"Anyone who can provide a valid signature for the lock-script, can spend all outputs associated to this bitcoin address"*. Since only you can provide a valid signature for your hashed public-key/address, only you can spend Bitcoin send to your address. All miners can verify that your signature matches and include your transaction it in a block they are mining. Amounts and addresses are transparent, meaning anyone can exactly see how much Bitcoin is send and to who's address they are send.  

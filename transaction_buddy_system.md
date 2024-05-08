@@ -4,7 +4,7 @@
 This proposal can be seen as a 5th option in the [Discussion on Bulletin Board Systems on the grin forum.](https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822]). Note that Grin is by default interactive crypto, the discusion on Bulletin Board Systems does not aim to provide 1 step or non-interactive transactions, but aims to find/explore user friendly ways to buffer and facilitate interaction between users.
 
 ## Transaction Relay-buddy system
-This document proposes a method which I call the transaction relay *Buddy System* to allow a users (**A, Alice**) to send a transaction via an intermediary (**B, Bob**) to another user (**C, Charlie**). The transaction flow is **request-RSR-SRS** and requires 6 steps of interaction. The objective is to faciliate transaction between Alice and Charlie while Alice is offline.
+This document proposes a method which I call the transaction relay ***Buddy System*** to allow a users (**A, Alice**) to send a transaction via an intermediary (**B, Bob**) to another user (**C, Charlie**). The transaction flow is **request-RSR-SRS** and requires 6 steps of interaction. The objective is to faciliate transaction between Alice and Charlie while Alice is offline.
 
 0) Alice contacts Charlie over tor, but Charlie is offline
 1) Alice send a **request** to Bob, the intermediary/*relay-buddy*.
@@ -27,6 +27,7 @@ This idea [originates from 2021](https://forum.grin.mw/t/an-open-discussion-on-n
 * Relayed transactions are indistinguishable from a normal transaction and as such are not identifiable as being relayed.
 
 ***Disadvantages:***
+* **Major disadvantage: :man_facepalming:** Who ever knows the PubKey from Charlie, can bruteforce/deduce the value send by Alice to Charlie.
 * The relay is not private (opposed to the [Contract Wall](https://gist.github.com/phyro/1046022377fcb1886a1b4f6500f23773)" solution by Phyro)  
 * The **relay-buddy system** can be decentralised, but does require extra transaction relay wrapper information to be implemented.
 * For payment proofs to work, both kernels need to be published. This requires Bob to be trusted. Perhaps an extra proof needss to be generated between Alice and Bob, to make sure that Bob and Charlie cannot 'collude' by Bob not publishing the second kernel, allowing Charlie to deny having received funds.
@@ -52,8 +53,9 @@ For this to work it is essential that:
 
 
 ## Security considerations
+* The use of a known/public to all PubKey from Charlie is still a problem.
 * Not sure yet how to do payment proof with 3 parties (according to Tromp ok as long as both kernels are published)
-* Intermediare can deny having build a transaction, but would not gain any funds, nor fonds will funds be lost.
+* Intermediare can deny having build a transaction, but would not gain any funds, nor will funds be lost.
 * Intermediary knows the address of the Receiver, optionally use a second tor address for this, not the slatepac address for extra privacy.
 * Someone can pretend to be the receiver comming online, but cannot steal funds since he/she does not have the pubkey to get the `value` and `index` from the rangeproof, needed to spend that output. Nor can any messages be decrypted by that user since he does not have the privatekey for that tor address.
 * Receiver must drop outputs build by the sender, replacing it with an equal value output with a non-fixed public-key, so basically replacing it with a normal transaction

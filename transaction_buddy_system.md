@@ -1,23 +1,23 @@
-**Disclaimer:** <br/>This is docucement explores a **non-interactive user experience** for Grin transactions using a **relay buddy system**. This method is not proven, created for fun, and the author does advocates this solution.  
+**Disclaimer:** <br/>This is docucement explores a **non-interactive user experience** for Grin transactions using a **relay buddy system**. This method is not proven, created for fun, and the author does advocates this solution should ever be implemented. The proposal does however provides a first example of how cut-through in transactions before broadcasting can be used to gain some benefits.
 
 # Discussion on Bulleting Boards systems
-This proposal can be seen as a 5th option in the [Discussion on Bulletin Board Systems on the grin forum.](https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822]). Note that Grin is by default interactive crypto, the discusion on Bulletin Board Systems does not aim to provide 1 step or non-interactive transactions, but aims to find/explore user friendly ways to buffer and facilitate interaction between users.
+This proposal can be seen as a 6th option in the [Discussion on Bulletin Board Systems on the grin forum.](https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822]). Note that Grin is by default interactive crypto, the discusion on Bulletin Board Systems does not aim to provide 1 step or non-interactive transactions, but aims to find/explore user friendly ways to buffer and facilitate interaction between users. This proposal simply aims to share one such possible solutions, which after some investigation appears to be quite similar to Marek's Slate Store proposal[[REF](https://github.com/grinventions/ideas/blob/main/SlateStore.md)].
 
 ## Transaction Relay-buddy system
-This document proposes a method which I call the transaction relay ***Buddy System*** to allow a users (**A, Alice**) to send a transaction via an intermediary (**B, Bob**) to another user (**C, Charlie**). The transaction flow is **request-RSR-SRS** and requires 6 steps of interaction. The objective is to faciliate transaction between Alice and Charlie while Alice is offline.
+This document proposes a method which I call the transaction relay ***Buddy System*** to allow a users (**A, Alice**) to send a transaction via an intermediary (**B, Bob**) to a receiver (**C, Charlie**). The transaction flow is **request-RSR-SRS** and requires 6 steps of interaction. Most notably, its skipps a last round of interaction with the Sender, creating a 'send and forget' kind of user experience. The objective is to faciliate transaction between Alice and Charlie while Alice is offline.
 
 0) Alice contacts Charlie over tor, but Charlie is offline
 1) Alice send a **request** to Bob, the intermediary/*relay-buddy*.
-2) Bob creates a payment request **(RSR)** including his own output/**relay-fee**
-3) Alice adds the outputs for Charlie using his known Pubkey(s) and creates her partial signature
-4) Bob wiats till Charlie comes online to continues the transaction. When Charlie comes online, Bob sends the transaction in SRS mode to Charlie
-5) Charlie receives the transaction - creates new outputs to replace the ones made by and signed for by Alice. These old outputs can be dropped thanks to **cut-through** so they do not need to appear on chain. Charlie signs both the innitial RSR transaction and the new SRS transaction (two kernesl) and sends the result to Bob.  
-6) Bob finalizes the two transactions that are now aggregated by signing the second kernel and broadcast the transction with both kernels to earn his relay fee.
+2) Bob creates a payment request **(RSR)**.
+3) Alice adds the outputs for Charlie using Charlies **known Pubkey(s)** and creates her partial signature
+4) Bob including his own output/**relay-fee** and waits till Charlie comes online to continues the transaction. When Charlie comes online, Bob sends the transaction in SRS mode to Charlie
+5) Charlie receives the transaction - and replaces the output from Alice with a new outputs for himself, deducting the relay fee to be send to Bob. Charlie signs both the innitial RSR transaction and the new SRS transaction (two kernels) and sends the result to Bob.  
+6) Bob finalizes the two transactions that are now aggregated by signing the second kernel and broadcasting the transctions to the network to earn his relay fee.
 
 **Note**
+* The main invention here is in step 5, using cut-through to replace an undesired output since it contains Bob's known public key. The magic here is that the output from Alice to Charlie can be  dropped thanks to **cut-through** and therefore will be known to no one except Alice, Bob and Charlie. What is acchieved by using this temporary output is that Alice and Charlie never need to interact. The last round of interaction is not needed since Alice knows Charlie's excess value to commit to using her partial signature.
 * Bob cannot broadcast the transaction without Charlie, since he does not know the partial excess to sign for Charlies outputs.
-* The outputs created by Alice for Charlie, will never appear on-chain thanks to cutt-through, unless Bob does include these outputs on purpose, in which case miners will will drop the intermediate outputs.
-This idea [originates from 2021](https://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomoushttps://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomous). 
+* This idea [originates from 2021](https://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomoushttps://forum.grin.mw/t/an-open-discussion-on-non-interactive-transactions/8510/48?u=anynomous) and is **a first example of how using cut-through before broadcasting a transaction can be usefull**. 
 * The relay buddy system requires additional public transfer information to be presented by the receiver, e.g. a wrapper around the slatepack address. See more details later in this document on *Transaction transfer information*.
 
 ***Advantages:***
@@ -49,7 +49,6 @@ For this to work it is essential that:
 * A relay buddy gets fee. Crypto only works with proper insentive distribution.
 * Sender builds outputs for the Receiver so the Intermediary cannot create outputs for himself
 * Relay-buddy does broadcast both kernels for payment-proofs to work. Again, we need some sort of extra insentive/proof to avoid a relay from cheating the sender.
-
 
 
 ## Security considerations

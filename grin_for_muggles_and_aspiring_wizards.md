@@ -2,9 +2,9 @@
 # Grin for muggles AND aspiring wizards :thinking: :mage_woman:
 This documentation aims to explain Grin and mimblewimble for regular users, muggles and aspiring wizards.
 The format chosen for this document is a 'User Story' where I answers common questions from a user. Where possible I will simplify while at the same time being **explicit about the information flow between [users] - [nodes] - [wallets]**. 
-This documentation is self serving, and represents my own struggles to understand Grin as a visual thinker, programmer and aspiring wizard. Since I have a background in Bitcoin, I will make many comparisons with Bitcoin; highlight where Grin is different from Bitcoin. This documents describe Grin's implementation of mimblewimble which is pure and minimal as mimblewimble was intended. Note that grin is "a" *mimblewimble* implementation. There are other projects like Beam, Tari and Litecoin that use mimblewimble or variations thereof. 
+This documentation is self serving, and represents my own struggles to understand Grin as a visual thinker, programmer and aspiring wizard. Since I have a background in Bitcoin, I will make many comparisons with Bitcoin; highlight where Grin is different from Bitcoin. This documents describe Grin's implementation of mimblewimble which is pure and minimal as mimblewimble was intended. Note that grin is "a" *mimblewimble* implementation. There are other projects like Beam, Tari (monero sidechain) and Litecoin that use mimblewimble or variations thereof. 
 
-This document serves as an Add-On to the [official documentation](https://docs.grin.mw/wiki/introduction/grin-for-bitcoiners/). If you prefer a  conceptual high level description with awesome visualizations, I highly recommend reading [this explanation by Phyro](https://phyro.github.io/what-is-grin/). Reading about Grin from multiple angles helped me greatly on my journey to understand Grin and I would recommend you to take a similar approach where you read multiple explenations. If your brain gets tired while reading, feel free to skip forward to the "SUMMARY" at the end of each section.<br/> <br/>
+This document serves as an Add-On to the [official documentation](https://docs.grin.mw/wiki/introduction/grin-for-bitcoiners/). If you prefer a  conceptual high level description with awesome visualizations, I highly recommend reading [this explanation by Phyro](https://phyro.github.io/what-is-grin/). If you prefer a short video explaining the essentails, watch [this video on bulletproofs](https://www.youtube.com/watch?v=ilGfKH-kFiQ). Reading about Grin from multiple angles helped me greatly on my journey to understand Grin and I would recommend you to take a similar approach where you read multiple explenations. If your brain gets tired while reading, feel free to skip forward to the "SUMMARY" at the end of each section.<br/> <br/>
 
 **Outline of this document:**
 
@@ -205,6 +205,7 @@ Big thank you to all the wizards that came up with mimblewimble and Grin and all
 
 
 # References
+https://www.youtube.com/watch?v=ilGfKH-kFiQ<br/>
 https://github.com/mimblewimble/docs<br/>
 https://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/<br/>
 https://docs.grin.mw/wiki/table-of-contents/<br/>

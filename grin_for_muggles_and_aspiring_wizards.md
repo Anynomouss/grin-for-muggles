@@ -174,9 +174,9 @@ There is one subtle problem when aggregating transactions and that is that an at
 * Your Grin node treats all transactions as **a single transaction** :exploding_head:
 * Grin transactions can be aggregated at any level!
     ```
-    transaction: sum(outputs) - sum(inputs) = kernel_excess + fee 
-    block:       sum(outputs) - sum(inputs) = sum(kernel_excess)  
-    blockchain:  sum(outputs) - sum(inputs) = sum(kernel_excess) + height*60*H  
+    transaction: sum(inputs) - sum(outputs) = kernel_excess + fee 
+    block:       sum(inputs) - sum(outputs) = sum(kernel_excess) + 60  
+    bchain:      sum(inputs) - sum(outputs) = sum(kernel_excess) + height*60  
     ```
 * Proving a) **non-inflation** b) **ownership** for the whole blockchain is as simple as checking: 
   `sum(outputs) - sum(inputs) = sum(kernel_excess) + height*60*H  ` 
@@ -204,15 +204,19 @@ Big thank you to all the wizards that came up with mimblewimble and Grin and all
   *Anynomous* :grin:
 
 
-# References
-https://www.youtube.com/watch?v=ilGfKH-kFiQ<br/>
-https://github.com/mimblewimble/docs<br/>
+# References :scroll:
+The reference are ordered in the adviced reading/watching order.<br/>
+Bulletproofs 1https://tlu.tarilabs.com/cryptography/bulletproofs-and-mimblewimble<br/>
+Official documentation: https://github.com/mimblewimble/docs<br/>
 https://docs.grin.mw/wiki/introduction/mimblewimble/mimblewimble/<br/>
-https://docs.grin.mw/wiki/table-of-contents/<br/>
 https://phyro.github.io/what-is-grin/interactive_txs.html<br/>
 https://phyro.github.io/what-is-grin/mimblewimble.html<br/>
 https://medium.com/@brandonarvanaghi/grin-transactions-explained-step-by-step-fdceb905a853<br/>
-https://www.doubloin.com/learn/what-is-schnorr-signature<br/>
-https://blog.blockstream.com/en-musig-key-aggregation-schnorr-signatures/<br/>
 https://tlu.tarilabs.com/protocols/mimblewimble-transactions-explained<br/>
-https://tlu.tarilabs.com/cryptography/bulletproofs-and-mimblewimble<br/>
+Bulletproofs 2: https://www.youtube.com/watch?v=ilGfKH-kFiQ<br/>
+Bulletproofs 3: https://www.youtube.com/watch?v=Adrh6BCc_Ao
+Schnorr signatures 1: https://www.doubloin.com/learn/what-is-schnorr-signature<br/>
+Schnorr signatures 1 https://blog.blockstream.com/en-musig-key-aggregation-schnorr-signatures/<br/>  
+Only read first 10 pages unless your very math savvy: https://github.com/AdamISZ/from0k2bp/blob/master/from0k2bp.pdf<br/>  
+
+

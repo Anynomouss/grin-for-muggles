@@ -50,7 +50,7 @@ Example of how transfer protocol information could potentially look like as JSON
 
 ## Insentives
 For this to work it is essential that:
-* A relay buddy gets a fee. I frimly belive any system only works with proper insentive distribution.
+* A relay buddy gets a fee. I firmly belive any system only works with a proper insentive distribution.
 * Sender builds outputs for the Receiver so the transaction contains an output for both Sender, Relay/intermediary and the Receiver
 * The relay-buddy does need to broadcast both kernels for payment-proofs to work. 
 
@@ -64,13 +64,13 @@ For this to work it is essential that:
 * Receiver must drop outputs build by the sender, replacing it with an equal value output with a non-fixed public-key, so basically replacing it with a normal transaction
 * There must some time involved before a transaction is dropped, or in case of a trusted buddy, perhaps a message being send to the Receiver to go online to receive funds.
 * How about spam to an intermediary. Can Alice and Charlie collude to spamm Bob, but Charlie will never finalize any transaction? Should not be a problem since each transaction requires new outputs to be on-chain. This should serve as a spam protection. Additionally, a maximum amount of transactions can be set by bob to be stored for his receiver friend.
-* Can Bob screw over Charlie by not performing cut-through and publishing his outputs that do contain the public-keys online? I think yes, what would be the des-insentive? Should charlie scan and detect this? Bob sees multiple outputs with the same blinding factor/pub-key being re-used.   
+* Can Bob screw over Charlie by not performing cut-through and publishing his outputs that do contain the public-keys online? I think yes, what would be the disinsentive? Should Charlie scan and detect this? Bob sees multiple outputs with the same blinding factor/pub-key being re-used.   
 * Both Alice and Bob need access to the same pubkey information.
 * Can a random attacker anoy Bob enough to stop him from relaying transactions for Charlie? Yes, in theory, but Bob can simply put a maximum to the number of transaction to accept from a single Sender.
 
 
 ## References
-Bulletin Board System discussoin on Grin forum: https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822/14
+Bulletin Board System discussion on Grin forum: https://forum.grin.mw/t/grin-bulletin-board-discussing-four-options-and-select-one-for-bounty/9822/14
 <br/>
 Transfer protocol: https://forum.grin.mw/t/what-is-the-most-critical-problem-of-grin/9424/62<br/>
 Contract wall: https://gist.github.com/phyro/1046022377fcb1886a1b4f6500f23773
@@ -79,6 +79,6 @@ Payment proof Kurt: https://forum.grin.mw/t/eliminating-finalize-step/7621/22<br
 https://forum.grin.mw/t/eliminating-finalize-step/7621/76?u=anynomous<br/>
 https://github.com/mimblewimble/grin-rfcs/pull/59#issuecomment-679970246<br/>
 https://medium.com/blockstream/insecure-shortcuts-in-musig-2ad0d38a97da<br/>
-Asynchrnous transactions e.g. Grinbox https://github.com/mimblewimble/grin-rfcs/pull/25<br/>
+Asynchronous transactions e.g. Grinbox https://github.com/mimblewimble/grin-rfcs/pull/25<br/>
 https://gist.github.com/DavidBurkett/32e33835b03f9101666690b7d6185203<br/>
 Discussion on KeyBas: keybase://chat/grincoin#general/63744<br/>
